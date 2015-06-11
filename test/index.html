@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <h1>WebKit Seed test</h1>
+        <p>
+            <button onclick="openFile()">Open</button>
+        </p>
+            
+        <script type="text/javascript">
+            var Gtk = imports.gi.Gtk;
+            var Gio = imports.gi.Gio;
+
+            function openFile() {
+                var fileChooserDialog = new Gtk.FileChooserDialog();
+                fileChooserDialog.add_button("Cancel", Gtk.ResponseType.CANCEL);
+                fileChooserDialog.add_button("Open", Gtk.ResponseType.ACCEPT);
+                fileChooserDialog.set_action(Gtk.FileChooserAction.OPEN);
+                if (fileChooserDialog.run() == Gtk.ResponseType.ACCEPT) {
+                    console.log(fileChooserDialog.get_filename());
+                }
+                fileChooserDialog.destroy();
+            }
+        </script>
+    </body>
+</html>
