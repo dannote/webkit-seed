@@ -15,7 +15,16 @@
                 fileChooserDialog.add_button("Open", Gtk.ResponseType.ACCEPT);
                 fileChooserDialog.set_action(Gtk.FileChooserAction.OPEN);
                 if (fileChooserDialog.run() == Gtk.ResponseType.ACCEPT) {
-                    console.log(fileChooserDialog.get_filename());
+                    var file = Gio.file_new_for_path(fileChooserDialog.get_filename());
+
+                    file.read_async(0, null, function(source, result) {
+                        var stream = source.read_finish(result);
+                        var dataStream = new Gio.DataInputStream.c_new(stream);
+
+                        var preformatted = document.createElement('pre');
+                        preformatted.innerHTML = dataStream.read_until('', 0);
+                        document.body.appendChild(preformatted);
+                    });
                 }
                 fileChooserDialog.destroy();
             }
